@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TounesWatt — L'Écosystème de Mobilité Électrique</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        :root {
+            --accent-green: #39FF14;
+            --bg-dark: #09090b;
+            --card-bg: #111115;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: #f5f5f7;
+            overflow-x: hidden;
+        }
+
+        .apple-gradient-text {
+            background: linear-gradient(135deg, #ffffff 30%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .green-glow {
+            text-shadow: 0 0 25px rgba(57, 255, 20, 0.4);
+        }
+
+        .bento-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bento-card:hover {
+            border-color: rgba(57, 255, 20, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+        }
+
+        canvas {
+            display: block;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #333;
+        }
+    </style>
+</head>
+<body class="bg-[#09090b] text-white selection:bg-[#39FF14] selection:text-black">
+
+    <!-- Navigation Apple Style -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#09090b]/80 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-6 h-14 flex justify-between items-center text-xs font-medium text-gray-300">
+            <a href="#" class="font-bold text-white text-sm tracking-wide flex items-center gap-2 group">
+                <i class="fa-solid fa-bolt text-[#39FF14] group-hover:scale-110 transition-transform"></i>
+                <span>TOUNESWATT</span>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#vision" class="hover:text-white transition-colors">Vision</a>
+                <a href="#experience" class="hover:text-white transition-colors">Écosystème</a>
+                <a href="#technology" class="hover:text-white transition-colors">Technologie</a>
+                <a href="#contact" class="hover:text-white transition-colors">Réseau</a>
+            </div>
+            <a href="#experience" class="bg-white text-black px-4 py-1.5 rounded-full font-semibold hover:bg-gray-200 transition-colors">
+                Explorer
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section avec Canvas Three.js -->
+    <header class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 overflow-hidden">
+        
+        <!-- Interactive Three.js Background -->
+        <div class="absolute inset-0 -z-10 opacity-60 pointer-events-none">
+            <canvas id="heroCanvas" class="w-full h-full"></canvas>
+        </div>
+
+        <span class="text-xs uppercase tracking-[0.3em] text-[#39FF14] mb-4 font-semibold px-3 py-1 rounded-full border border-[#39FF14]/20 bg-[#39FF14]/5">
+            Infrastructure de Charge de Nouvelle Génération
+        </span>
+
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight apple-gradient-text max-w-5xl leading-tight">
+            L'avenir de la route.<br>Électrifié.
+        </h1>
+
+        <p class="text-gray-400 text-lg md:text-xl mt-6 max-w-2xl font-light leading-relaxed">
+            Découvrez <span class="text-white font-medium">TounesWatt</span>. La plateforme intelligente qui unifie, optimise et accélère la recharge électrique à travers toute la Tunisie.
+        </p>
+
+        <div class="mt-10 flex flex-col sm:flex-row gap-4 z-10">
+            <a href="#vision" class="bg-[#39FF14] text-black font-semibold px-8 py-3.5 rounded-full text-sm shadow-[0_0_30px_rgba(57,255,20,0.25)] hover:scale-105 hover:bg-[#32e012] transition-all duration-300 flex items-center justify-center gap-2">
+                <span>Explorer le Réseau</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+            <a href="#technology" class="border border-white/20 hover:border-white px-8 py-3.5 rounded-full text-sm font-medium transition-all duration-300 backdrop-blur-sm flex items-center justify-center">
+                Architecture Technique
+            </a>
+        </div>
+
+        <!-- Telemetry Pill -->
+        <div class="mt-16 border border-white/10 bg-black/40 backdrop-blur-md px-6 py-3 rounded-full flex items-center gap-6 text-xs text-gray-400">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-[#39FF14] animate-ping"></span>
+                <span class="text-white font-mono">100% Maillage National</span>
+            </div>
+            <div class="h-3 w-[1px] bg-white/10"></div>
+            <div>Temps de réponse API: <span class="text-white font-mono" id="pingMs">24ms</span></div>
+        </div>
+    </header>
+
+    <!-- Vision Section (Bento Grid Apple Style) -->
+    <section id="vision" class="py-32 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-20">
+            <h2 class="text-3xl md:text-5xl font-bold tracking-tight apple-gradient-text">Conçu pour la précision.</h2>
+            <p class="text-gray-400 mt-4 text-lg max-w-xl mx-auto font-light">Une infrastructure thought-through dans les moindres détails pour la mobilité de demain.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Card 1 -->
+            <div class="bento-card p-8 rounded-3xl flex flex-col justify-between relative overflow-hidden group">
+                <div>
+                    <span class="text-xs text-[#39FF14] uppercase tracking-wider font-semibold">Cartographie Live</span>
+                    <h3 class="text-2xl font-bold mt-2">Disponibilité en temps réel</h3>
+                    <p class="text-gray-400 text-sm mt-3 leading-relaxed">Visualisez instantanément les bornes opérationnelles, les vitesses de charge et l'affluence sur chaque axe majeur.</p>
+                </div>
+                <div class="mt-10 h-36 bg-black/50 rounded-2xl border border-white/5 flex items-center justify-center relative overflow-hidden group-hover:border-[#39FF14]/30 transition-colors">
+                    <i class="fa-solid fa-map-location-dot text-5xl text-[#39FF14]/80 group-hover:scale-110 transition-transform duration-500"></i>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bento-card p-8 rounded-3xl flex flex-col justify-between relative overflow-hidden group">
+                <div>
+                    <span class="text-xs text-blue-400 uppercase tracking-wider font-semibold">Trip Planner</span>
+                    <h3 class="text-2xl font-bold mt-2">Trajets optimisés</h3>
+                    <p class="text-gray-400 text-sm mt-3 leading-relaxed">Calcul automatique des arrêts de recharge inter-urbains selon l'autonomie exacte de votre véhicule électrique.</p>
+                </div>
+                <div class="mt-10 h-36 bg-black/50 rounded-2xl border border-white/5 flex items-center justify-center relative overflow-hidden group-hover:border-blue-400/30 transition-colors">
+                    <i class="fa-solid fa-route text-5xl text-blue-400/80 group-hover:scale-110 transition-transform duration-500"></i>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bento-card p-8 rounded-3xl flex flex-col justify-between relative overflow-hidden group">
+                <div>
+                    <span class="text-xs text-purple-400 uppercase tracking-wider font-semibold">Écosystème</span>
+                    <h3 class="text-2xl font-bold mt-2">Standards Unifiés</h3>
+                    <p class="text-gray-400 text-sm mt-3 leading-relaxed">Passerelle universelle interconnectant les principaux opérateurs d'énergie et les conducteurs sur tout le territoire.</p>
+                </div>
+                <div class="mt-10 h-36 bg-black/50 rounded-2xl border border-white/5 flex items-center justify-center relative overflow-hidden group-hover:border-purple-400/30 transition-colors">
+                    <i class="fa-solid fa-network-wired text-5xl text-purple-400/80 group-hover:scale-110 transition-transform duration-500"></i>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Interactive Showcase / Live Simulator -->
+    <section id="experience" class="py-32 bg-[#0d0d11] border-y border-white/10 px-6">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            
+            <div>
+                <span class="text-xs uppercase tracking-widest text-[#39FF14] font-semibold">Simplicité Absolue</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-3 tracking-tight">Une interface fluide,<br>sans friction.</h2>
+                <p class="text-gray-400 mt-6 leading-relaxed font-light">
+                    De la localisation de la borne à la fin de session, TounesWatt automatise le traitement des métriques de charge en direct. Moins d'attente, plus de mobilité.
+                </p>
+
+                <div class="mt-8 space-y-4">
+                    <div class="flex items-start gap-4 p-4 rounded-2xl bg-white/5 border border-white/5">
+                        <i class="fa-solid fa-bolt text-[#39FF14] text-xl mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold text-sm">Supercharge DC Haute Puissance</h4>
+                            <p class="text-xs text-gray-400 mt-1">Support jusqu'à 150 kW pour récupérer 80% d'autonomie en 20 minutes.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 p-4 rounded-2xl bg-white/5 border border-white/5">
+                        <i class="fa-solid fa-shield-halved text-blue-400 text-xl mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold text-sm">Protocoles Sécurisés</h4>
+                            <p class="text-xs text-gray-400 mt-1">Authentification et monitoring télémétrique chiffrés de bout en bout.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Interactive Widget -->
+            <div class="bento-card p-8 rounded-3xl shadow-2xl relative">
+                <div class="absolute top-4 right-4 bg-[#39FF14]/10 border border-[#39FF14]/30 text-[#39FF14] text-[10px] font-mono font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#39FF14] animate-pulse"></span>
+                    SIMULATEUR LIVE
+                </div>
+
+                <div class="py-8 text-center">
+                    <i class="fa-solid fa-charging-station text-6xl text-[#39FF14] mb-4 drop-shadow-[0_0_15px_rgba(57,255,20,0.5)]"></i>
+                    <h3 class="text-xl font-bold">Station Tunis-Carthage</h3>
+                    <p class="text-xs text-gray-400 mt-1">Hub DC Haute Puissance • 150 kW</p>
+
+                    <!-- Interactive Battery Gauge -->
+                    <div class="mt-8 bg-black/60 p-6 rounded-2xl border border-white/10">
+                        <div class="flex justify-between text-xs text-gray-400 mb-2">
+                            <span>Niveau de charge simulateur</span>
+                            <span id="chargePercentage" class="font-mono text-[#39FF14] font-bold">68%</span>
+                        </div>
+                        <div class="w-full h-3 bg-gray-800 rounded-full overflow-hidden p-0.5 border border-white/5">
+                            <div id="batteryBar" class="h-full bg-gradient-to-r from-emerald-500 to-[#39FF14] rounded-full transition-all duration-300" style="width: 68%;"></div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 mt-6 text-left">
+                            <div class="bg-white/5 p-3 rounded-xl">
+                                <span class="text-[10px] text-gray-400 block uppercase">Puissance Délivrée</span>
+                                <span class="text-sm font-mono font-bold text-white" id="powerKw">142 kW</span>
+                            </div>
+                            <div class="bg-white/5 p-3 rounded-xl">
+                                <span class="text-[10px] text-gray-400 block uppercase">Disponibilité</span>
+                                <span class="text-sm font-mono font-bold text-[#39FF14]">3 / 4 Connecteurs</span>
+                            </div>
+                        </div>
+
+                        <button id="simBtn" onclick="toggleSimulation()" class="w-full mt-6 bg-white/10 hover:bg-white/20 border border-white/10 text-white font-medium py-2.5 rounded-xl text-xs transition-colors">
+                            Booster la recharge
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Technology & Architecture Section -->
+    <section id="technology" class="py-32 px-6 max-w-6xl mx-auto text-center">
+        <span class="text-xs uppercase tracking-widest text-[#39FF14] font-semibold">Core Architecture</span>
+        <h2 class="text-3xl md:text-5xl font-bold mt-3 apple-gradient-text">Construit pour la haute performance.</h2>
+        <p class="text-gray-400 mt-4 max-w-xl mx-auto text-sm font-light">Une pile technologique moderne garantissant un temps de latence minimal et une résilience maximale.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16 text-left">
+            <div class="bento-card p-6 rounded-2xl">
+                <i class="fa-brands fa-js text-yellow-400 text-3xl mb-4"></i>
+                <h3 class="font-bold text-base">TypeScript Engine</h3>
+                <p class="text-xs text-gray-400 mt-2 leading-relaxed">Typage strict et exécution optimisée pour la gestion synchrone des flux de données bornes.</p>
+            </div>
+            <div class="bento-card p-6 rounded-2xl">
+                <i class="fa-solid fa-database text-cyan-400 text-3xl mb-4"></i>
+                <h3 class="font-bold text-base">Drizzle ORM</h3>
+                <p class="text-xs text-gray-400 mt-2 leading-relaxed">Requêtes SQL légères à ultra-basse latence pour synchroniser l'état du réseau en temps réel.</p>
+            </div>
+            <div class="bento-card p-6 rounded-2xl">
+                <i class="fa-solid fa-cloud text-orange-400 text-3xl mb-4"></i>
+                <h3 class="font-bold text-base">Edge Cloud Network</h3>
+                <p class="text-xs text-gray-400 mt-2 leading-relaxed">Déploiement distribué au plus près des conducteurs pour une réactivité instantanée.</p>
+            </div>
+            <div class="bento-card p-6 rounded-2xl">
+                <i class="fa-solid fa-cube text-[#39FF14] text-3xl mb-4"></i>
+                <h3 class="font-bold text-base">3D Telemetry</h3>
+                <p class="text-xs text-gray-400 mt-2 leading-relaxed">Rendu immersif Three.js pour la visualisation spatiale du maillage sur le territoire.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer & Contact -->
+    <footer id="contact" class="border-t border-white/10 bg-black py-16 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-bolt text-[#39FF14] text-xl"></i>
+                <span class="font-bold tracking-wider text-sm">TOUNESWATT</span>
+            </div>
+            <p class="text-xs text-gray-500">
+                &copy; 2026 TounesWatt. Infrastructure & Plateforme de Mobilité Électrique en Tunisie.
+            </p>
+            <div class="flex gap-6 text-gray-400 text-sm">
+                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Three.js + Interactive JavaScript Logic -->
+    <script>
+        // --- 1. Three.js Background Animation ---
+        function initThreeScene() {
+            const container = document.getElementById('heroCanvas');
+            const scene = new THREE.Scene();
+
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 30;
+
+            const renderer = new THREE.WebGLRenderer({ canvas: container, alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Particle Nodes Network
+            const particleCount = 120;
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const velocities = [];
+
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                positions[i] = (Math.random() - 0.5) * 60;
+                positions[i + 1] = (Math.random() - 0.5) * 60;
+                positions[i + 2] = (Math.random() - 0.5) * 60;
+
+                velocities.push({
+                    x: (Math.random() - 0.5) * 0.03,
+                    y: (Math.random() - 0.5) * 0.03,
+                    z: (Math.random() - 0.5) * 0.03
+                });
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            // Custom glowing circle texture
+            const canvasTexture = document.createElement('canvas');
+            canvasTexture.width = 16;
+            canvasTexture.height = 16;
+            const ctx = canvasTexture.getContext('2d');
+            const grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
+            grad.addColorStop(0, '#39FF14');
+            grad.addColorStop(1, 'transparent');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 16, 16);
+
+            const texture = new THREE.CanvasTexture(canvasTexture);
+
+            const material = new THREE.PointsMaterial({
+                color: 0x39FF14,
+                size: 1.2,
+                map: texture,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            });
+
+            const particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            // Connective lines mesh
+            const lineMaterial = new THREE.LineBasicMaterial({
+                color: 0x39FF14,
+                transparent: true,
+                opacity: 0.12
+            });
+
+            let lineMesh = new THREE.LineSegments(new THREE.BufferGeometry(), lineMaterial);
+            scene.add(lineMesh);
+
+            // Mouse Interaction Parallax
+            let mouseX = 0, mouseY = 0;
+            window.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX - window.innerWidth / 2) * 0.0005;
+                mouseY = (e.clientY - window.innerHeight / 2) * 0.0005;
+            });
+
+            // Animation Loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                const pos = particles.geometry.attributes.position.array;
+
+                for (let i = 0; i < particleCount; i++) {
+                    const idx = i * 3;
+                    pos[idx] += velocities[i].x;
+                    pos[idx + 1] += velocities[i].y;
+                    pos[idx + 2] += velocities[i].z;
+
+                    // Bounce limits
+                    if (Math.abs(pos[idx]) > 30) velocities[i].x *= -1;
+                    if (Math.abs(pos[idx + 1]) > 30) velocities[i].y *= -1;
+                    if (Math.abs(pos[idx + 2]) > 30) velocities[i].z *= -1;
+                }
+
+                particles.geometry.attributes.position.needsUpdate = true;
+
+                // Update connecting lines dynamically
+                const linePositions = [];
+                for (let i = 0; i < particleCount; i++) {
+                    for (let j = i + 1; j < particleCount; j++) {
+                        const dx = pos[i * 3] - pos[j * 3];
+                        const dy = pos[i * 3 + 1] - pos[j * 3 + 1];
+                        const dz = pos[i * 3 + 2] - pos[j * 3 + 2];
+                        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                        if (dist < 10) {
+                            linePositions.push(pos[i * 3], pos[i * 3 + 1], pos[i * 3 + 2]);
+                            linePositions.push(pos[j * 3], pos[j * 3 + 1], pos[j * 3 + 2]);
+                        }
+                    }
+                }
+
+                lineMesh.geometry.dispose();
+                lineMesh.geometry = new THREE.BufferGeometry();
+                lineMesh.geometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+
+                // Smooth camera motion
+                camera.position.x += (mouseX * 10 - camera.position.x) * 0.05;
+                camera.position.y += (-mouseY * 10 - camera.position.y) * 0.05;
+                camera.lookAt(scene.position);
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Resize Handler
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // --- 2. Interactive Battery Simulator ---
+        let charge = 68;
+        let isSimulating = false;
+        let simInterval = null;
+
+        function toggleSimulation() {
+            const btn = document.getElementById('simBtn');
+            const batteryBar = document.getElementById('batteryBar');
+            const chargeText = document.getElementById('chargePercentage');
+            const powerText = document.getElementById('powerKw');
+
+            if (!isSimulating) {
+                isSimulating = true;
+                btn.textContent = 'Pause la simulation';
+                btn.classList.add('bg-[#39FF14]/20', 'text-[#39FF14]', 'border-[#39FF14]/40');
+
+                simInterval = setInterval(() => {
+                    if (charge < 100) {
+                        charge += 1;
+                        chargeText.textContent = charge + '%';
+                        batteryBar.style.width = charge + '%';
+                        powerText.textContent = (140 + Math.floor(Math.random() * 10)) + ' kW';
+                    } else {
+                        charge = 20; // reset loop
+                    }
+                }, 150);
+            } else {
+                isSimulating = false;
+                clearInterval(simInterval);
+                btn.textContent = 'Booster la recharge';
+                btn.classList.remove('bg-[#39FF14]/20', 'text-[#39FF14]', 'border-[#39FF14]/40');
+                powerText.textContent = '142 kW';
+            }
+        }
+
+        // Ping Simulation
+        setInterval(() => {
+            const pingEl = document.getElementById('pingMs');
+            if (pingEl) {
+                pingEl.textContent = (18 + Math.floor(Math.random() * 12)) + 'ms';
+            }
+        }, 3000);
+
+        // Initialize Three.js Scene on load
+        window.addEventListener('DOMContentLoaded', initThreeScene);
+    </script>
+</body>
+</html>
